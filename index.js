@@ -1,9 +1,8 @@
-var http = require('http');
 var jsdom = require("jsdom");
-var request = require('request');
-var http = require('http');
 var fs = require('fs');
+var request = require('request');
 var sanitize = require("sanitize-filename");
+
 var url = '';
 
 if (process && process.argv && process.argv[2])
@@ -29,10 +28,7 @@ var download = function (uri, filename, callback)
 	{
 		try
 		{
-			request(uri).on('error', function (err)
-			{
-				console.log(err);
-			}).pipe(fs.createWriteStream('./downloaded/' + filename)).on('close', callback);
+			request(uri).on('error', function (err) { console.log(err); }).pipe(fs.createWriteStream('./downloaded/' + filename)).on('close', callback);
 		} catch (errr)
 		{
 			console.log(errr);
@@ -79,9 +75,6 @@ var getImageFromPage = function (err, window)
 	});
 };
 
+
 console.log('Getting images from ' + url + ' ...');
-jsdom.env(
-	url,
-//	["http://code.jquery.com/jquery.js"],
-	getImageFromPage
-);
+jsdom.env(url, getImageFromPage);
